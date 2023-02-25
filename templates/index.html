@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=600">
+    <title>ISSAT - ISRO Satellite Tracker</title>
+    <script type="text/javascript">
+        function display_c() {
+            var refresh = 1000; // Refresh rate in milli seconds
+            mytime = setTimeout('display_ct()', refresh)
+        }
+
+        function display_ct() {
+            var x = new Date()
+            var local = x.getHours() + ":" + x.getMinutes() + ":" + x.getSeconds();
+            var utc = x.getUTCHours() + ":" + x.getUTCMinutes() + ":" + x.getUTCSeconds();
+            document.getElementById('utc').innerHTML = utc;
+            document.getElementById('local').innerHTML = local;
+            display_c();
+        }
+    </script>
+    <script src="https://www.webglearth.com/v2/api.js"></script>
+    <script>
+        function initialize() {
+            const meta = document.getElementById("meta");
+            const lat = meta.getAttribute("lat");
+            const long = meta.getAttribute("long");
+            const alt = meta.getAttribute("alt");
+            const satname = meta.getAttribute("satname");
+            const noradid = meta.getAttribute("noradid");
+
+
+            var earth = new WE.map('earth_div');
+            WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: satname                
+            }).addTo(earth);
+            var marker = WE.marker([lat, long], 'static/img/marker.png').addTo(earth);
+            marker.bindPopup("<b>" + satname + "</b><br>NORAD ID : " + noradid + "<br />", { maxWidth: 150, closeButton: true }).openPopup();
+
+
+            earth.setView([lat, long], 2);
+            display_ct();
+        }
+    </script>
+    <style type="text/css">
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        #earth_div {
+            width: 60%;
+            background-color: black;
+            height: 360px;
+        }
+
+        .we-pp-wrapper {
+            background: #000000b8 !important;
+            color: wheat;
+            border: 1px solid #b8b8b8;
+        }
+
+        .we-pm-icon {
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 32px;
+            height: 41px;
+        }
+    </style>
+    <style>
+        .hero-image {
+            background-image: url("static/img/bg5.jpg");
+            background-color: #000000;
+            /* Used if the image is unavailable */
+            background-size: 1600px;
+            background-repeat: repeat;
+            height: 100vh;
+        }
+
+        #container {
+            max-width: 750px;
+            display: flex;
+            padding-left: 45px;
+        }
+
+        #monitor {
+            background: #000;
+            position: relative;
+            border-top: 3px solid #888;
+            margin: 5%;
+            padding: 2% 2% 4% 2%;
+            border-radius: 10px;
+            border-bottom-left-radius: 50% 2%;
+            border-bottom-right-radius: 50% 2%;
+            transition: margin-right 1s;
+        }
+
+        #monitor:after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 3%;
+            left: 36%;
+            height: .5%;
+            width: 28%;
+            background: #ddd;
+            border-radius: 50%;
+            box-shadow: 0 0 3px 0 white;
+        }
+
+        #monitorscreen {
+            background-size: cover;
+            background-position: top center;
+            padding-bottom: 56.25%;
+            width: 700px;
+            height: 0;
+            position: relative;
+            border: 1px solid #3e3e52;
+            overflow: hidden;
+            display: flex;
+        }
+
+
+        @media all and (min-width: 960px) {
+            #monitor {
+                -webkit-animation: tvflicker .2s infinite alternate;
+                -moz-animation: tvflicker .5s infinite alternate;
+                -o-animation: tvflicker .5s infinite alternate;
+                animation: tvflicker .5s infinite alternate;
+            }
+
+            @-webkit-keyframes tvflicker {
+                0% {
+                    box-shadow: 0 0 100px 0 rgba(200, 235, 255, 0.4);
+                }
+
+                100% {
+                    box-shadow: 0 0 95px 0 rgba(200, 230, 255, 0.45);
+                }
+            }
+
+            @-moz-keyframes tvflicker {
+                0% {
+                    box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+                }
+
+                100% {
+                    box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+                }
+            }
+
+            @-o-keyframes tvflicker {
+                0% {
+                    box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+                }
+
+                100% {
+                    box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+                }
+            }
+
+            @keyframes tvflicker {
+                0% {
+                    box-shadow: 0 0 100px 0 rgba(225, 235, 255, 0.4);
+                }
+
+                100% {
+                    box-shadow: 0 0 60px 0 rgba(200, 220, 255, 0.6);
+                }
+            }
+        }
+
+        #details {
+            color: wheat;
+            font-size: 14px;
+            line-height: 25px;
+            display: block;
+            height: fit-content;
+            padding: 40px 0 0 5px;
+        }
+
+        .satcatmain{
+            border: 1px solid #4a4a6f;
+            padding: 15px 25px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0px 0px 14px 0px rgba(45,255,196,0.9);
+        }
+
+        .glow{
+            text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe, 0 0 102px #bc13fe, 0 0 151px #bc13fe;
+        }
+
+
+        #menu ul{
+            list-style: none;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            top: 21px;
+            line-height: 3;
+        }
+        #menu ul a{
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 32px;
+            padding: 0 15px;
+            font-weight: bold;
+            display: block;
+        }
+        #menu ul li{
+            position: relative;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+        #menu ul ul{
+            position: absolute;
+            top: 4%;
+            right: 215px;
+            display: none;
+            /* background: #4946424a; */
+            width: 250px;
+            /* border: 1px solid blue; */
+            padding: 0 10px;
+        }
+        #menu ul ul li a{
+            border-bottom: 1px solid rgba(139, 139, 154, 0.578);
+        }
+        #menu ul li:hover > ul{
+            display: block;
+        }
+        #menu ul ul li:hover > ul{
+            display: block;
+        }
+    </style>
+</head>
+
+<body onload="initialize()" style="margin:0; padding: 0; background-color: #000;">
+
+
+    <div style="height: 100vh; background-color: #000000;">
+        <div class="nav" style="height:110px;padding: 10px; background-color: #000000;">
+            <img src="static/img/logo.png" style="height:85%; margin-left: 50px; margin-top: 10px;" alt="">
+        </div>
+
+        <meta id="meta" lat='{{data["lat"]}}' long='{{data["long"]}}' alt='{{data["alt"]}}' satname='{{data["satname"]}}' noradid='{{data["noradid"]}}'>
+        <div id="container">
+            <div id="monitor">
+                <div id="monitorscreen">
+                    <div id="earth_div"></div>
+                    <div id="details" style="color: wheat; size: 20px;">
+                        <div style="font-weight: bold; font-size: 17px; margin-bottom: 5px;"><span>{{data['satname']}}</span></div>
+                        <div><span>NORAD ID: </span><span id='noradid'>{{data['noradid']}}</span></div>	
+                        <div><span>Launch Date: </span><span>{{data['launch_date']}}</span></div>
+                        <div><span>Launch Mass: </span><span>{{data['launch_mass']}}</span></div>
+                        <div><span>Launch Vehicle: </span><span>{{data['launch_vehicle']}}</span></div>
+                        <div><span>UTC: </span><span id='utc'></span></div>
+                        <div><span>Local: </span><span id="local"></span></div>
+                        <div><span>Latitude: </span><span>{{data['lat']}}</span></div>
+                        <div><span>Longitude: </span><span>{{data['long']}}</span></div>
+                        <div><span>Altitude(Km) : </span><span>{{data['alt']}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="menu">
+                <img src="static/img/bg5.jpg" style="width: 400px; float: right; margin-right: 220px;" alt="">
+                <div id="satcat" style="color: white; position: absolute; right: 45px;">
+                    <div class="satcatmain"><span class="glow">Satellite Categories</span></div>
+                    <div id="menu">
+                        <ul>
+                        {% for cat in satcatdata%}
+                            <li>{{cat}}
+                                <ul>
+                                {%for sat in satcatdata[cat]%}
+                                    <li><a href="?s={{sat[1]}}">{{sat[0]}}</a></li>
+                                {%endfor%}
+                                </ul>
+                            </li>
+                        {%endfor%}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

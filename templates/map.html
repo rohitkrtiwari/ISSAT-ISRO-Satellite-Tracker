@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=600">
+    <title>ISSAT - ISRO Satellite Tracker</title>
+    <script src="https://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+
+        var earth = new WE.map('earth_div');
+        WE.tileLayer('https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg', {
+          tileSize: 256,
+          bounds: [[-85, -180], [85, 180]],
+          minZoom: 0,
+          maxZoom: 16,
+          attribution: 'WebGLEarth example',
+          tms: true
+        }).addTo(earth);
+
+        var marker = WE.marker([0.08, 72.2]).addTo(earth);
+        marker.bindPopup("<b>Hello world!</b><br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
+
+        var markerCustom = WE.marker([12, -9], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
+
+        earth.setView([0.08, 72.2], 1);
+      }
+    </script>
+    <style type="text/css">
+      html, body{padding: 0; margin: 0;}
+      #earth_div{    
+            top: 95px;
+            left: 45px;
+            width: 720px;
+            background-color: black;
+            height: 450px;
+            position: absolute !important;
+      }
+    </style>
+
+    <meta name="description" content="Add markers with a pop-up to an open-source 3D globe and display it on a web or mobile devices.">
+  </head>
+  <body onload="initialize()">
+    <div id="earth_div"></div>
+    
+  </body>
+</html>
