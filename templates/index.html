@@ -44,10 +44,13 @@
             display_ct();
         }
     </script>
+    
     <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
         html,
         body {
             padding: 0;
+            font-family: 'Share Tech', sans-serif;
             margin: 0;
         }
 
@@ -56,7 +59,9 @@
             background-color: black;
             height: 360px;
         }
-
+        .we-pp{
+            z-index: 1;
+        }
         .we-pp-wrapper {
             background: #000000b8 !important;
             color: wheat;
@@ -68,6 +73,7 @@
             background-repeat: no-repeat;
             width: 32px;
             height: 41px;
+            z-index: 1;
         }
     </style>
     <style>
@@ -183,69 +189,103 @@
         }
 
         .satcatmain{
-            border: 1px solid #4a4a6f;
-            padding: 15px 25px;
+            padding: 2px 7px;
             letter-spacing: 2px;
             cursor: pointer;
-            box-shadow: 0px 0px 14px 0px rgba(45,255,196,0.9);
+            height: 24px;
+            transition-duration: 150ms;
+            box-shadow: 0px 6px 3px -4px rgb(45 255 196 / 90%);
+        }
+
+        .satcatmain:hover{
+            text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe, 0 0 102px #bc13fe, 0 0 151px #bc13fe;
         }
 
         .glow{
             text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #bc13fe, 0 0 82px #bc13fe, 0 0 92px #bc13fe, 0 0 102px #bc13fe, 0 0 151px #bc13fe;
         }
 
-
-        #menu ul{
-            list-style: none;
-            position: relative;
-            margin: 0;
-            padding: 0;
-            top: 21px;
-            line-height: 3;
-        }
-        #menu ul a{
-            color: #fff;
-            text-decoration: none;
-            font-size: 15px;
-            line-height: 32px;
-            padding: 0 15px;
-            font-weight: bold;
-            display: block;
-        }
-        #menu ul li{
-            position: relative;
-            margin: 0;
-            padding: 0;
-            cursor: pointer;
-        }
-        #menu ul ul{
+        .satcatmenu-block{
+            width: fit-content;
             position: absolute;
-            top: 4%;
-            right: 215px;
+            z-index: 4;
+            padding: 11px 0px 10px 8px;
+            transition-duration: 150ms;
             display: none;
-            /* background: #4946424a; */
-            width: 250px;
-            /* border: 1px solid blue; */
-            padding: 0 10px;
         }
-        #menu ul ul li a{
-            border-bottom: 1px solid rgba(139, 139, 154, 0.578);
+        .satcatmenu-block-child{
+            background-color: white;
+            margin-top: 9px;
+            padding: 6px 0 8px 20px;
         }
-        #menu ul li:hover > ul{
+        .satcatmenu-block tr td span a{
+            text-decoration: none;
+            color: black;
+            transition-duration: 50ms;
+        }
+        .satcatmenu-block tr td span a:hover{
+            color: #ff8f4e;
+            border-bottom: 3px solid #ff8f4e;
+        }
+        td{
+            padding: 9px 42px 7px 1px;
+        }
+        tr{
+            margin: 0;
+        }
+        #cat:hover > .satcatmenu-block{
             display: block;
         }
-        #menu ul ul li:hover > ul{
+        .satcatmenu-block:hover{
             display: block;
         }
     </style>
+
+    <script>
+        function show1(){
+            document.getElementById('worldmap').style.display ='none';
+        }
+        function show2(){
+            document.getElementById('worldmap').style.display = 'block';
+        }
+
+    </script>
 </head>
 
 <body onload="initialize()" style="margin:0; padding: 0; background-color: #000;">
 
 
     <div style="height: 100vh; background-color: #000000;">
-        <div class="nav" style="height:110px;padding: 10px; background-color: #000000;">
-            <img src="static/img/logo.png" style="height:85%; margin-left: 50px; margin-top: 10px;" alt="">
+        <div class="nav" style="height:110px;padding: 10px; background-color: #000000; display: flex;">
+            <img src="static/img/logo.png" style="height:60%; margin-left: 50px; margin-top: 10px;" alt="">
+            <div style="
+            color: aquamarine;
+            width: 69%;
+            margin-left: 80px;
+            padding: 30px 0;
+            justify-content: space-evenly;
+            font-weight: 700;
+            font-size: 17px;">
+                <div style="display: flex;">
+                {% for cat in satcatdata%} 
+                    <div id="cat">
+                        <div class="satcatmain" >{{cat}}</div> 
+                        <div class="satcatmenu-block">
+                            <div class="satcatmenu-block-child">
+                                <table>
+                                <tr>
+                                {%for sat in satcatdata[cat]%}
+                                    <td><span><a href="?s={{sat[1]}}">{{sat[0]}}</a></span></td>
+                                    {% if loop.index%5 == 0 %} </tr><tr> {%endif%}
+                                {%endfor%}
+                                </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {%endfor%}
+                </div>
+            </div>
         </div>
 
         <meta id="meta" lat='{{data["lat"]}}' long='{{data["long"]}}' alt='{{data["alt"]}}' satname='{{data["satname"]}}' noradid='{{data["noradid"]}}'>
@@ -269,25 +309,23 @@
             </div>
             <div id="menu">
                 <img src="static/img/bg5.jpg" style="width: 400px; float: right; margin-right: 220px;" alt="">
-                <div id="satcat" style="color: white; position: absolute; right: 45px;">
-                    <div class="satcatmain"><span class="glow">Satellite Categories</span></div>
-                    <div id="menu">
-                        <ul>
-                        {% for cat in satcatdata%}
-                            <li>{{cat}}
-                                <ul>
-                                {%for sat in satcatdata[cat]%}
-                                    <li><a href="?s={{sat[1]}}">{{sat[0]}}</a></li>
-                                {%endfor%}
-                                </ul>
-                            </li>
-                        {%endfor%}
-                        </ul>
-                    </div>
+                <div style="position: absolute; color: wheat; padding: 71px 85px 0px 66px;">
+                    <h2>{{data['satname']}} - {{data['launch_date']}}</h2>
+                    {{data['summary']}}
                 </div>
             </div>
         </div>
 
+        <iframe src="/map" id="worldmap" style="position: absolute;top: 186px;left: 98px; z-index: 3; display: none;" scrolling="no" frameborder="0" width="700px" height="393px"></iframe>
+
+        <div id="selector" style="color: white;
+        margin-left: 143px;
+        display: flex;
+        width: 284px;
+        justify-content: space-between;">
+            <div><span>Earth 3D : </span><input type="radio" onclick="show1()" value="Yes" name="tab" checked></div>
+            <div><span>World Map : </span><input type="radio" onclick="show2()" value="Yes" name="tab"></div>
+        </div>
 
     </div>
 </body>
