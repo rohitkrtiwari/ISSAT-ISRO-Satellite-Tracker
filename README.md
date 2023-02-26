@@ -3,6 +3,10 @@ ISSAT is an open-source satellite tracking application that allows users to trac
 
 <img src="demo2.png">
 
+## Demo Video
+
+https://user-images.githubusercontent.com/59118402/221426968-153ae0eb-7e27-40ed-b96b-772079bf603f.mp4
+
 Features:
 
 * Real-time tracking of ISRO satellites
