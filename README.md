@@ -1,7 +1,7 @@
 # ISSAT - ISRO Satellite Tracker 
 ISSAT is an open-source satellite tracking application that allows users to track the position of ISRO satellites in real-time. This project is built using Python and leverages the N2YO API and ISRO for satellite data and map visualization. ISSAT provides a user-friendly interface for selecting specific ISRO satellites and tracking their position over time.
 
-<img src="demo.png">
+<img src="demo2.png">
 
 Features:
 
