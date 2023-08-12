@@ -39,3 +39,9 @@ Contributions to this project are welcome and encouraged.
 This project was inspired by the amazing work being done at ISRO and the many open-source contributors who have built similar satellite tracking applications.
 
 I hope this README file provides helpful information on how to get started with your ISRO Satellite Tracker project, including installation and usage instructions. Best of luck with your project!
+
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://rohitkrtiwari.github.io/Portfolio)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rohitkrtiwari/)
+
